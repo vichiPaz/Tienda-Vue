@@ -1,9 +1,15 @@
 <template>
   <div>
-    <div v-if="state.items.length === 0" class="alert alert-secondary">
+    <div v-if="isLoading" class="text-center p-3">
+      Realizando la Transacción ...
+    </div>
+    <div
+      v-if="!isLoading && state.items.length === 0"
+      class="alert alert-secondary"
+    >
       Tu carrito está vacío.
     </div>
-    <div v-else class="table-responsive">
+    <div v-else-if="!isLoading" class="table-responsive">
       <table class="table align-middle">
         <thead>
           <tr>
@@ -55,17 +61,75 @@
         <button class="btn btn-outline-secondary" @click="actions.clearCart()">
           Vaciar
         </button>
-        <button class="btn btn-success" @click="">Comprar</button>
+        <button
+          class="btn btn-success"
+          :disabled="state.items.length === 0"
+          @click="buyProducts"
+        >
+          Comprar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    v-if="showSuccessModal"
+    class="modal fade show d-block custom-modal"
+    tabindex="-1"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <he class="modal-title">Compra exitosa</he>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            @click="closeModal"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>¡Tu compra se ha realizado de manera exitosa!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="closeModal">
+            Aceptar
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { actions, state } from "../state";
+
+const isLoading = ref(false);
 
 const total = computed(() =>
   state.items.reduce((a, it) => a + it.price * it.qty, 0)
 );
+
+const showSuccessModal = ref(false);
+async function buyProducts() {
+  if (!state.items || state.items.length === 0) return;
+  isLoading.value = true;
+  actions.clearCart();
+  await new Promise((resolve) => setTimeout(resolve, 800));
+  isLoading.value = false;
+  showSuccessModal.value = true;
+}
+
+function closeModal() {
+  showSuccessModal.value = false;
+}
 </script>
+
+<style>
+.custom-modal {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+</style>
