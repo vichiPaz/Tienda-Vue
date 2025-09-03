@@ -42,6 +42,9 @@
         </div>
       </section>
     </main>
+    <div>
+        <Footer></Footer>
+      </div>
   </div>
 </template>
 
@@ -52,6 +55,9 @@ import SearchBox from './components/SearchBox.vue'
 import ProductList from './components/ProductList.vue'
 import CartTable from './components/CartTable.vue'
 import LoginForm from './components/LoginForm.vue'
+import Footer from './components/Footer.vue';
+
+
 
 const cartCount = computed(() => state.items.reduce((a, it) => a + it.qty, 0))
 const go = actions.go
