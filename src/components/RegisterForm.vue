@@ -1,32 +1,32 @@
-<!-- src/components/LoginForm.vue -->
+<!-- src/components/RegisterForm.vue -->
 <template>
   <div class="card">
     <div class="card-body">
-      <h1 class="h5 mb-3">Iniciar sesión</h1>
+      <h1 class="h5 mb-3">Crear cuenta</h1>
       <form @submit.prevent="onSubmit" class="vstack gap-3">
         <div>
-          <label class="form-label">Nombre (opcional)</label>
+          <label class="form-label">Nombre</label>
           <input v-model="name" type="text" class="form-control" placeholder="Tu nombre" />
         </div>
         <div>
           <label class="form-label">Correo</label>
-          <input v-model="email" type="email" class="form-control" required placeholder="usuario1@mitienda.com" />
+          <input v-model="email" type="email" class="form-control" required placeholder="tucorreo@ejemplo.com" />
         </div>
         <div>
           <label class="form-label">Contraseña</label>
-          <input v-model="password" type="password" class="form-control" required placeholder="password" />
+          <input v-model="password" type="password" class="form-control" required placeholder="••••••••" />
         </div>
 
         <div v-if="state.authError" class="alert alert-danger" v-text="state.authError"></div>
 
-        <button class="btn btn-primary" :disabled="state.authLoading">
+        <button class="btn btn-success" :disabled="state.authLoading">
           <span v-if="state.authLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>
-          Entrar
+          Registrarme
         </button>
 
         <p class="mt-3 mb-0 text-muted">
-          ¿No tienes cuenta?
-          <a href="#" @click.prevent="$emit('switch-to-register')">Crea una aquí</a>
+          ¿Ya tienes cuenta?
+          <a href="#" @click.prevent="$emit('switch-to-login')">Inicia sesión</a>
         </p>
       </form>
     </div>
@@ -43,7 +43,7 @@ const password = ref("");
 
 async function onSubmit() {
   try {
-    await actions.login({ email: email.value, password: password.value, name: name.value });
+    await actions.register({ name: name.value, email: email.value, password: password.value });
   } catch (e) {}
 }
 </script>
