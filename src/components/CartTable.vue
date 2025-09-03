@@ -82,7 +82,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <he class="modal-title">Compra exitosa</he>
+          <he class="modal-title text-bg-light">Compra exitosa</he>
           <button
             type="button"
             class="btn-close"
@@ -90,7 +90,7 @@
             @click="closeModal"
           ></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body text-bg-light">
           <p>¡Tu compra se ha realizado de manera exitosa!</p>
         </div>
         <div class="modal-footer">
@@ -131,5 +131,9 @@ function closeModal() {
 <style>
 .custom-modal {
   background-color: rgba(0, 0, 0, 0.4);
+}
+
+.custom-modal-dialog {
+  background-color: rgb(93, 90, 110);
 }
 </style>
